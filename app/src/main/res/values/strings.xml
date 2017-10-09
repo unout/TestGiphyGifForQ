@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TestAppGiphy</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="searchMessage">What do you want to search?</string>
+    <string name="connection_error">No Internet connection</string>
+    <string name="common_error">Some troubles</string>
+    <string name="empty_body">Empty body</string>
+</resources>

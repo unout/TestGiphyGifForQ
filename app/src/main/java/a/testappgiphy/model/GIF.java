@@ -1,12 +1,6 @@
 package a.testappgiphy.model;
 
-import android.graphics.drawable.Drawable;
-
 import com.google.gson.annotations.SerializedName;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 
 public class GIF {
 
@@ -31,23 +25,6 @@ public class GIF {
         this.url = url;
     }
 
-    public Drawable getDrawable(final String url, final String src) {
-
-        final Drawable[] drawable = new Drawable[1];
-
-        new Thread(new Runnable() {
-            public void run() {
-                //do time consuming operations
-                try {
-                    InputStream is = new URL(url).openStream();
-                    drawable[0] = Drawable.createFromStream(is, src);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-        return drawable[0];
-    }
 }
 //    "type": "gif",
 //    "id": "tOWyML1WPzKjm",

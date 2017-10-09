@@ -12,16 +12,5 @@ public class GiphyResponse {
 
     @SerializedName("data")
     private List<GIF> body;
-//
-//    @SerializedName("data")
-//    @Expose
-//    private ArrayList<GIF> contacts = new ArrayList<>();
-//
-//    public ArrayList<GIF> getContacts() {
-//        return contacts;
-//    }
-//
-//    public void setContacts(ArrayList<GIF> contacts) {
-//        this.contacts = contacts;
-//    }
+
 }

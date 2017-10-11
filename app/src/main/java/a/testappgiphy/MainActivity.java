@@ -11,11 +11,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import a.testappgiphy.fragments.GifListFragment;
+import a.testappgiphy.support.Constants;
 
 public class MainActivity extends AppCompatActivity implements Manager.OnUpdateListener {
 
-    private Manager manager = Manager.getInstance();
-    private Context context = this;
+    public static final int TEXT_SIZE = 14;
     private String textToSearch;
 
     @Override
@@ -23,12 +23,14 @@ public class MainActivity extends AppCompatActivity implements Manager.OnUpdateL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Manager manager = Manager.getInstance();
         manager.setListener(this);
         manager.callingForTrends(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         final GifListFragment gifListFragment = new GifListFragment();
+        final Context context = this;
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,14 +38,14 @@ public class MainActivity extends AppCompatActivity implements Manager.OnUpdateL
                 final AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage(R.string.searchMessage);
                 final EditText input = new EditText(context);
-                input.setTextSize(14);
+                input.setTextSize(TEXT_SIZE);
                 builder
                         .setView(input)
                         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 textToSearch = input.getText().toString();
                                 gifListFragment.setSearchText(textToSearch);
-                                manager.callingForSearch(context, textToSearch);
+                                Manager.getInstance().callingForSearch(context, textToSearch);
                                 dialog.cancel();
                             }
                         })
@@ -78,20 +80,20 @@ public class MainActivity extends AppCompatActivity implements Manager.OnUpdateL
     }
 
     @Override
-    public void onUpdateFinished(byte resultCode) {
+    public void onUpdateFinished(Constants.Error resultCode) {
         switch (resultCode) {
-            case 1:
+            case SUCCESS:
                 break;
-            case 2:
+            case NETWORK_ERROR:
                 String network_error = getString(R.string.connection_error);
 
                 Toast.makeText(this, network_error, Toast.LENGTH_LONG).show();
                 break;
-            case 3:
+            case COMMON_ERROR:
                 String common_error = getString(R.string.common_error);
                 Toast.makeText(this, common_error, Toast.LENGTH_LONG).show();
                 break;
-            case 4:
+            case EMPTY_BODY:
                 String empty_body = getString(R.string.empty_body);
                 Toast.makeText(this, empty_body, Toast.LENGTH_LONG).show();
                 break;

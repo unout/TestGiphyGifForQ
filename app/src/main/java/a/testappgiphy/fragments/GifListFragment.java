@@ -19,6 +19,7 @@ import a.testappgiphy.Manager;
 import a.testappgiphy.R;
 import a.testappgiphy.adapters.RecyclerAdapter;
 import a.testappgiphy.model.GIF;
+import a.testappgiphy.support.Constants;
 
 public class GifListFragment extends Fragment implements Manager.OnUpdateListener {
 
@@ -86,24 +87,24 @@ public class GifListFragment extends Fragment implements Manager.OnUpdateListene
     }
 
     @Override
-    public void onUpdateFinished(byte resultCode) {
+    public void onUpdateFinished(Constants.Error resultCode) {
         switch (resultCode) {
-            case 1:
+            case SUCCESS:
                 mGifs = Manager.getInstance().getResponse();
                 if (mGifs.size() > 0) {
                     recyclerAdapter = new RecyclerAdapter(mContext, mGifs);
                     mRecyclerView.setAdapter(recyclerAdapter);
                 }
                 break;
-            case 2:
+            case NETWORK_ERROR:
                 String network_error = getString(R.string.connection_error);
                 Toast.makeText(mContext, network_error, Toast.LENGTH_LONG).show();
                 break;
-            case 3:
+            case COMMON_ERROR:
                 String common_error = getString(R.string.common_error);
                 Toast.makeText(mContext, common_error, Toast.LENGTH_LONG).show();
                 break;
-            case 4:
+            case EMPTY_BODY:
                 String empty_body = getString(R.string.empty_body);
                 Toast.makeText(mContext, empty_body, Toast.LENGTH_LONG).show();
                 break;

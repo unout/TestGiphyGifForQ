@@ -17,7 +17,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static a.testappgiphy.support.Constants.CODE_SUCCESS;
+import static a.testappgiphy.support.Constants.Error;
 import static a.testappgiphy.support.Constants.GIPHY_API_KEY;
 
 public class Manager {
@@ -54,10 +54,10 @@ public class Manager {
         this.mListener = mListener;
     }
 
-    private byte calling(final Context context) {
+    private Error calling(final Context context) {
         if (context != null && !NetworkUtils.isOnline(context)) {
-            setInitFinished(Constants.CODE_NETWORK_ERROR);
-            return Constants.CODE_NETWORK_ERROR;
+            setInitFinished(Error.NETWORK_ERROR);
+            return Error.NETWORK_ERROR;
         } else {
             Retrofit restAdapter = new Retrofit.Builder()
                     .baseUrl(Constants.HOST)
@@ -65,7 +65,7 @@ public class Manager {
                     .build();
 
             service = restAdapter.create(Service.class);
-            return Constants.CODE_SUCCESS;
+            return Error.SUCCESS;
         }
     }
 
@@ -75,32 +75,32 @@ public class Manager {
             public void onResponse(@NonNull Call<GiphyResponse> call, @NonNull Response<GiphyResponse> response) {
                 if (response.body() != null) {
                     Manager.getInstance().setResponse(response);
-                    setInitFinished(Constants.CODE_SUCCESS);
+                    setInitFinished(Error.SUCCESS);
                 } else {
-                    setInitFinished(Constants.EMPTY_BODY);
+                    setInitFinished(Error.EMPTY_BODY);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<GiphyResponse> call, @NonNull Throwable t) {
-                setInitFinished(Constants.CODE_COMMON_ERROR);
+                setInitFinished(Error.COMMON_ERROR);
             }
         });
     }
 
     public void callingForTrends(final Context context) {
-        if (calling(context) == CODE_SUCCESS) {
+        if (calling(context) == Error.SUCCESS) {
             enqueue(service.getTrends(GIPHY_API_KEY));
         }
     }
 
     public void callingForSearch(final Context context, String userInput) {
-        if (calling(context) == CODE_SUCCESS) {
+        if (calling(context) == Error.SUCCESS) {
             enqueue(service.getSearchedGIF(userInput, GIPHY_API_KEY));
         }
     }
 
-    private void setInitFinished(final byte resultCode) {
+    private void setInitFinished(final Error resultCode) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
 
             @Override
@@ -111,6 +111,6 @@ public class Manager {
     }
 
     public interface OnUpdateListener {
-        void onUpdateFinished(byte resultCode);
+        void onUpdateFinished(Error resultCode);
     }
 }

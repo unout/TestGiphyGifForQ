@@ -8,8 +8,8 @@ import retrofit2.http.Query;
 
 public interface Service {
     @GET(Constants.PATH_SEARCH)
-    Call<GiphyResponse> getSearchedGIF(@Query("q") String userInput, @Query("api_key") String API_KEY);
+    Call<GiphyResponse> getSearchedGIF(@Query("q") String userInput, @Query("api_key") String apiKey);
 
     @GET(Constants.PATH_TREND)
-    Call<GiphyResponse> getTrends(@Query("api_key") String API_KEY);
+    Call<GiphyResponse> getTrends(@Query("api_key") String apiKey);
 }

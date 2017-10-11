@@ -7,14 +7,14 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <TextView
-        android:id="@+id/tvSearch"
+        android:id="@+id/tv_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:padding="4sp"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/RVResult"
+        android:id="@+id/rv_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"

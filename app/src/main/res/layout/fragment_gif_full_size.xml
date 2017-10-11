@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_margin="16sp">
+    android:layout_margin="16dp">
 
     <ImageView
         android:id="@+id/ivFullSize"

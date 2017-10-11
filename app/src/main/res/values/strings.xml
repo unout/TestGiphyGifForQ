@@ -8,7 +8,7 @@
     <string name="common_error">Some troubles</string>
     <string name="empty_body">Empty body</string>
 
-    <string-array name="dialogActions">
+    <string-array name="dialog_actions">
         <item>Copy link address</item>
         <item>Open full size</item>
         <item>Open in browser</item>

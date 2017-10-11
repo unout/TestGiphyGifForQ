@@ -66,9 +66,9 @@ public class GifListFragment extends Fragment implements Manager.OnUpdateListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_gif_list, container, false);
 
-        tvSearch = v.findViewById(R.id.tvSearch);
+        tvSearch = v.findViewById(R.id.tv_search);
 
-        mRecyclerView = v.findViewById(R.id.RVResult);
+        mRecyclerView = v.findViewById(R.id.rv_result);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         return v;

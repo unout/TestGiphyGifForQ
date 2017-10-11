@@ -74,13 +74,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         ViewHolder(final View itemView) {
             super(itemView);
-            mGifView = itemView.findViewById(R.id.vGIF);
+            mGifView = itemView.findViewById(R.id.iv_gif);
 
             final ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    final String[] mActions = mContext.getResources().getStringArray(R.array.dialogActions);
+                    final String[] mActions = mContext.getResources().getStringArray(R.array.dialog_actions);
                     final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                     final String url = mGifs.get(position).getUrl();
                     final String id = mGifs.get(position).getId();

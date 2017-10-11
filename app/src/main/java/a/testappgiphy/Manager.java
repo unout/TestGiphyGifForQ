@@ -17,6 +17,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static a.testappgiphy.support.Constants.CODE_SUCCESS;
 import static a.testappgiphy.support.Constants.GIPHY_API_KEY;
 
 public class Manager {
@@ -47,10 +48,6 @@ public class Manager {
 
     public List<GIF> getResponse() {
         return response.getBody();
-    }
-
-    public interface OnUpdateListener {
-        void onUpdateFinished(byte resultCode);
     }
 
     public void setListener(OnUpdateListener mListener) {
@@ -92,13 +89,13 @@ public class Manager {
     }
 
     public void callingForTrends(final Context context) {
-        if (calling(context) == 1) {
+        if (calling(context) == CODE_SUCCESS) {
             enqueue(service.getTrends(GIPHY_API_KEY));
         }
     }
 
     public void callingForSearch(final Context context, String userInput) {
-        if (calling(context) == 1) {
+        if (calling(context) == CODE_SUCCESS) {
             enqueue(service.getSearchedGIF(userInput, GIPHY_API_KEY));
         }
     }
@@ -111,5 +108,9 @@ public class Manager {
                 mListener.onUpdateFinished(resultCode);
             }
         });
+    }
+
+    public interface OnUpdateListener {
+        void onUpdateFinished(byte resultCode);
     }
 }

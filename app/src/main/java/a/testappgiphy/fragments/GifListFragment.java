@@ -25,6 +25,9 @@ public class GifListFragment extends Fragment implements Manager.OnUpdateListene
     private Context mContext;
     private RecyclerView mRecyclerView;
     private TextView tvSearch;
+    private List<GIF> mGifs;
+    private RecyclerAdapter recyclerAdapter;
+
 
     public void setSearchText(String toSearch) {
         tvSearch.setText(toSearch);
@@ -74,15 +77,21 @@ public class GifListFragment extends Fragment implements Manager.OnUpdateListene
     @Override
     public void onResume() {
         super.onResume();
+        if (mGifs != null) {
+            if (mGifs.size() > 0) {
+                recyclerAdapter = new RecyclerAdapter(mContext, mGifs);
+                mRecyclerView.setAdapter(recyclerAdapter);
+            }
+        }
     }
 
     @Override
     public void onUpdateFinished(byte resultCode) {
         switch (resultCode) {
             case 1:
-                List<GIF> mGifs = Manager.getInstance().getResponse();
+                mGifs = Manager.getInstance().getResponse();
                 if (mGifs.size() > 0) {
-                    RecyclerAdapter recyclerAdapter = new RecyclerAdapter(mContext, mGifs);
+                    recyclerAdapter = new RecyclerAdapter(mContext, mGifs);
                     mRecyclerView.setAdapter(recyclerAdapter);
                 }
                 break;

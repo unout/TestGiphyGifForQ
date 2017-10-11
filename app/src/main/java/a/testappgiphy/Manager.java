@@ -4,20 +4,20 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import java.util.List;
 
 import a.testappgiphy.model.GIF;
 import a.testappgiphy.model.GiphyResponse;
+import a.testappgiphy.support.Constants;
+import a.testappgiphy.support.NetworkUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static a.testappgiphy.Constants.GIPHY_API_KEY;
-import static a.testappgiphy.Constants.myLogs;
+import static a.testappgiphy.support.Constants.GIPHY_API_KEY;
 
 public class Manager {
 
@@ -26,8 +26,7 @@ public class Manager {
     private Service service;
     private GiphyResponse response;
 
-    private Manager() {
-    }
+    private Manager() {}
 
     public static Manager getInstance() {
         Manager man = instance;
@@ -47,7 +46,6 @@ public class Manager {
     }
 
     public List<GIF> getResponse() {
-        Log.e(myLogs, String.valueOf(response.getBody()));
         return response.getBody();
     }
 
@@ -75,13 +73,11 @@ public class Manager {
     }
 
     private void enqueue(Call<GiphyResponse> call) {
-        Log.e(myLogs, call.request().toString());
         call.enqueue(new Callback<GiphyResponse>() {
             @Override
             public void onResponse(@NonNull Call<GiphyResponse> call, @NonNull Response<GiphyResponse> response) {
                 if (response.body() != null) {
                     Manager.getInstance().setResponse(response);
-                    Log.e(myLogs, String.valueOf(response.body()));
                     setInitFinished(Constants.CODE_SUCCESS);
                 } else {
                     setInitFinished(Constants.EMPTY_BODY);
@@ -89,7 +85,7 @@ public class Manager {
             }
 
             @Override
-            public void onFailure(Call<GiphyResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<GiphyResponse> call, @NonNull Throwable t) {
                 setInitFinished(Constants.CODE_COMMON_ERROR);
             }
         });

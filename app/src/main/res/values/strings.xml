@@ -7,4 +7,11 @@
     <string name="connection_error">No Internet connection</string>
     <string name="common_error">Some troubles</string>
     <string name="empty_body">Empty body</string>
+
+    <string-array name="dialogActions">
+        <item>Copy link address</item>
+        <item>Open full size</item>
+        <item>Open in browser</item>
+    </string-array>
+
 </resources>

@@ -1,6 +1,7 @@
 package a.testappgiphy;
 
 import a.testappgiphy.model.GiphyResponse;
+import a.testappgiphy.support.Constants;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

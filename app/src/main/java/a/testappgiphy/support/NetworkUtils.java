@@ -1,4 +1,4 @@
-package a.testappgiphy;
+package a.testappgiphy.support;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

@@ -3,7 +3,6 @@ package a.testappgiphy.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +22,6 @@ import a.testappgiphy.support.Constants;
 
 public class GifListFragment extends Fragment implements Manager.OnUpdateListener {
 
-    private Context mContext;
     private RecyclerView mRecyclerView;
     private TextView tvSearch;
     private List<GIF> mGifs;
@@ -40,21 +38,12 @@ public class GifListFragment extends Fragment implements Manager.OnUpdateListene
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        onAttachToContext(context);
     }
 
     @SuppressWarnings("deprecation")
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            onAttachToContext(activity);
-        }
-    }
-
-    // Called when the fragment attaches to the context
-    protected void onAttachToContext(Context context) {
-        mContext = context;
     }
 
     @Override
@@ -71,7 +60,7 @@ public class GifListFragment extends Fragment implements Manager.OnUpdateListene
 
         mRecyclerView = v.findViewById(R.id.rv_result);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         return v;
     }
 
@@ -80,7 +69,7 @@ public class GifListFragment extends Fragment implements Manager.OnUpdateListene
         super.onResume();
         if (mGifs != null) {
             if (mGifs.size() > 0) {
-                recyclerAdapter = new RecyclerAdapter(mContext, mGifs);
+                recyclerAdapter = new RecyclerAdapter(getActivity(), mGifs);
                 mRecyclerView.setAdapter(recyclerAdapter);
             }
         }
@@ -92,21 +81,21 @@ public class GifListFragment extends Fragment implements Manager.OnUpdateListene
             case SUCCESS:
                 mGifs = Manager.getInstance().getResponse();
                 if (mGifs.size() > 0) {
-                    recyclerAdapter = new RecyclerAdapter(mContext, mGifs);
+                    recyclerAdapter = new RecyclerAdapter(getActivity(), mGifs);
                     mRecyclerView.setAdapter(recyclerAdapter);
                 }
                 break;
             case NETWORK_ERROR:
                 String network_error = getString(R.string.connection_error);
-                Toast.makeText(mContext, network_error, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), network_error, Toast.LENGTH_LONG).show();
                 break;
             case COMMON_ERROR:
                 String common_error = getString(R.string.common_error);
-                Toast.makeText(mContext, common_error, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), common_error, Toast.LENGTH_LONG).show();
                 break;
             case EMPTY_BODY:
                 String empty_body = getString(R.string.empty_body);
-                Toast.makeText(mContext, empty_body, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), empty_body, Toast.LENGTH_LONG).show();
                 break;
             default:
                 break;

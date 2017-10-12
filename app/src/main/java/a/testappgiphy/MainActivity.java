@@ -1,6 +1,5 @@
 package a.testappgiphy;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,7 +14,6 @@ import a.testappgiphy.support.Constants;
 
 public class MainActivity extends AppCompatActivity implements Manager.OnUpdateListener {
 
-    public static final int TEXT_SIZE = 14;
     private String textToSearch;
 
     @Override
@@ -30,22 +28,21 @@ public class MainActivity extends AppCompatActivity implements Manager.OnUpdateL
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         final GifListFragment gifListFragment = new GifListFragment();
-        final Context context = this;
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setMessage(R.string.searchMessage);
-                final EditText input = new EditText(context);
-                input.setTextSize(TEXT_SIZE);
+                final EditText input = new EditText(MainActivity.this);
+                input.setTextSize(getResources().getDimension(R.dimen.text_size));
                 builder
                         .setView(input)
                         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 textToSearch = input.getText().toString();
                                 gifListFragment.setSearchText(textToSearch);
-                                Manager.getInstance().callingForSearch(context, textToSearch);
+                                Manager.getInstance().callingForSearch(MainActivity.this, textToSearch);
                                 dialog.cancel();
                             }
                         })
